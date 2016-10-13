@@ -55,24 +55,23 @@ public class StudentDAOFileImpl implements StudentDAO {
     @Override
     public void add(Student s) {
         mylist.add(s);
-        Gson gson = new GsonBuilder().create();
-        String jsonStr = gson.toJson(mylist,  new TypeToken<ArrayList<Student>>(){}.getType());
-        File f1 = this.context.getFilesDir();
-        File writeFile = new File(f1, "mydata.txt");
-        try {
-            FileWriter fw = new FileWriter(writeFile.getAbsoluteFile());
-            fw.write(jsonStr);
-            fw.flush();
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveFile();
 
     }
 
     @Override
     public void update(Student s) {
-
+        for (Student item : mylist)
+        {
+            if (s.ID == item.ID)
+            {
+                item.Name = s.Name;
+                item.Tel = s.Tel;
+                item.Addr = s.Addr;
+                break;
+            }
+        }
+        saveFile();
     }
 
     @Override
@@ -90,5 +89,21 @@ public class StudentDAOFileImpl implements StudentDAO {
             }
         }
         return null;
+    }
+
+    private void saveFile()
+    {
+        Gson gson = new GsonBuilder().create();
+        String jsonStr = gson.toJson(mylist,  new TypeToken<ArrayList<Student>>(){}.getType());
+        File f1 = this.context.getFilesDir();
+        File writeFile = new File(f1, "mydata.txt");
+        try {
+            FileWriter fw = new FileWriter(writeFile.getAbsoluteFile());
+            fw.write(jsonStr);
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
