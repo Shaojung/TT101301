@@ -10,8 +10,9 @@ public class Student {
     public String Tel;
     public String Addr;
 
-    public Student(String n, String t, String a)
+    public Student(int ID, String n, String t, String a)
     {
+        this.ID = ID;
         this.Name = n;
         this.Tel = t;
         this.Addr = a;
@@ -20,6 +21,6 @@ public class Student {
     @Override
     public String toString()
     {
-        return this.Name + "," + this.Tel + "," + this.Addr;
+        return this.ID + "," + this.Name + "," + this.Tel + "," + this.Addr;
     }
 }

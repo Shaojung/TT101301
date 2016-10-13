@@ -8,6 +8,8 @@ import android.widget.EditText;
 import com.test.tt101301.data.Student;
 import com.test.tt101301.data.StudentDAOFileImpl;
 
+import java.util.ArrayList;
+
 public class AddActivity extends AppCompatActivity {
 
     @Override
@@ -22,7 +24,17 @@ public class AddActivity extends AppCompatActivity {
         EditText edAddr = (EditText) findViewById(R.id.edAddr);
 
         StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
-        impl.add(new Student(edName.getText().toString(), edTel.getText().toString(), edAddr.getText().toString()));
+        ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
+        int MaxID = 0;
+        for (Student s: mylist)
+        {
+            if (s.ID > MaxID)
+            {
+                MaxID = s.ID;
+            }
+        }
+        MaxID++;
+        impl.add(new Student(MaxID, edName.getText().toString(), edTel.getText().toString(), edAddr.getText().toString()));
         finish();
     }
 }
