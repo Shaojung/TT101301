@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ListView lv;
+    ArrayList<Student> mylist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
-        ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
+        mylist = (ArrayList<Student>) impl.getList();
         String names[] = new String[mylist.size()];
         for (int i=0;i<mylist.size();i++)
         {
@@ -37,7 +40,15 @@ public class MainActivity extends AppCompatActivity {
                                         android.R.layout.simple_list_item_1,
                                         names);
         lv.setAdapter(adapter);
-
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent it = new Intent(MainActivity.this, DetailActivity.class);
+                int ID = mylist.get(position).ID;
+                it.putExtra("ID", ID);
+                startActivity(it);
+            }
+        });
     }
 
     @Override
