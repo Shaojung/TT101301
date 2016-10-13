@@ -76,7 +76,15 @@ public class StudentDAOFileImpl implements StudentDAO {
 
     @Override
     public void delete(Student s) {
-
+        for (int i = mylist.size()-1; i>= 0;i--)
+        {
+            if (s.ID == mylist.get(i).ID)
+            {
+                mylist.remove(i);
+                break;
+            }
+        }
+        saveFile();
     }
 
     @Override

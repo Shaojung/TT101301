@@ -37,5 +37,13 @@ public class DetailActivity extends AppCompatActivity {
         Student t = new Student(ID, ed1.getText().toString(), ed2.getText().toString(), ed3.getText().toString());
         StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
         impl.update(t);
+        finish();
+    }
+    public void clickDelete(View v)
+    {
+        Student t = new Student(ID, ed1.getText().toString(), ed2.getText().toString(), ed3.getText().toString());
+        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        impl.delete(t);
+        finish();
     }
 }
