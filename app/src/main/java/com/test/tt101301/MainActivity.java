@@ -1,8 +1,11 @@
 package com.test.tt101301;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -35,5 +38,18 @@ public class MainActivity extends AppCompatActivity {
                                         names);
         lv.setAdapter(adapter);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("ADD");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent it = new Intent(MainActivity.this, AddActivity.class);
+        startActivity(it);
+        return super.onOptionsItemSelected(item);
     }
 }
