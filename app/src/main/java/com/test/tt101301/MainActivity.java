@@ -15,12 +15,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StudentDAOFileImpl impl = new StudentDAOFileImpl();
+        StudentDAOFileImpl impl = new StudentDAOFileImpl(MainActivity.this);
         impl.add(new Student("AAA", "111", "AA11"));
+        impl = new StudentDAOFileImpl(MainActivity.this);
         ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
         for (Student s : mylist)
         {
             Log.d("DATA", s.toString());
         }
+
+
     }
 }
