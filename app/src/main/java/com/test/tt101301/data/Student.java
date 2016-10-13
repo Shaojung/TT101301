@@ -5,10 +5,10 @@ package com.test.tt101301.data;
  */
 
 public class Student {
-    int ID;
-    String Name;
-    String Tel;
-    String Addr;
+    public int ID;
+    public String Name;
+    public String Tel;
+    public String Addr;
 
     public Student(String n, String t, String a)
     {

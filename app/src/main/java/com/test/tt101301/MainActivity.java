@@ -3,6 +3,8 @@ package com.test.tt101301;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.test.tt101301.data.Student;
 import com.test.tt101301.data.StudentDAOFileImpl;
@@ -10,20 +12,28 @@ import com.test.tt101301.data.StudentDAOFileImpl;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    ListView lv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(MainActivity.this);
-        impl.add(new Student("AAA", "111", "AA11"));
-        impl = new StudentDAOFileImpl(MainActivity.this);
-        ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
-        for (Student s : mylist)
-        {
-            Log.d("DATA", s.toString());
-        }
+        lv = (ListView) findViewById(R.id.listView);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
+        String names[] = new String[mylist.size()];
+        for (int i=0;i<mylist.size();i++)
+        {
+            names[i] = mylist.get(i).Name;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                                        android.R.layout.simple_list_item_1,
+                                        names);
+        lv.setAdapter(adapter);
 
     }
 }
