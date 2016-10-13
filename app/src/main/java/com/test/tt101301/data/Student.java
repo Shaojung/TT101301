@@ -9,4 +9,17 @@ public class Student {
     String Name;
     String Tel;
     String Addr;
+
+    public Student(String n, String t, String a)
+    {
+        this.Name = n;
+        this.Tel = t;
+        this.Addr = a;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.Name + "," + this.Tel + "," + this.Addr;
+    }
 }
