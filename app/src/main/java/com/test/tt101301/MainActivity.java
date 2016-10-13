@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<Student> mylist;
+    MyStudentAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         {
             names[i] = mylist.get(i).Name;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                                        android.R.layout.simple_list_item_1,
-                                        names);
+        adapter = new MyStudentAdapter(MainActivity.this, mylist);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,18 +48,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add("ADD");
+        menu.add("DELETE");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent it = new Intent(MainActivity.this, AddActivity.class);
-        startActivity(it);
+        if (item.getTitle().equals("ADD"))
+        {
+            Intent it = new Intent(MainActivity.this, AddActivity.class);
+            startActivity(it);
+        }
+        if (item.getTitle().equals("DELETE"))
+        {
+            StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+            for (int i=mylist.size()-1;i>=0;i--)
+            {
+                if (adapter.chks[i] == true)
+                {
+                    impl.delete(new Student(mylist.get(i).ID, "","",""));
+                }
+            }
+            mylist = (ArrayList<Student>) impl.getList();
+            String names[] = new String[mylist.size()];
+            for (int i=0;i<mylist.size();i++)
+            {
+                names[i] = mylist.get(i).Name;
+            }
+            adapter = new MyStudentAdapter(MainActivity.this, mylist);
+            lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent it = new Intent(MainActivity.this, DetailActivity.class);
+                    int ID = mylist.get(position).ID;
+                    it.putExtra("ID", ID);
+                    startActivity(it);
+                }
+            });
+        }
         return super.onOptionsItemSelected(item);
     }
 }
