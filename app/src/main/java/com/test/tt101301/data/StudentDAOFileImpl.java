@@ -49,7 +49,7 @@ public class StudentDAOFileImpl implements StudentDAO {
 
     @Override
     public List getList() {
-        return null;
+        return mylist;
     }
 
     @Override
