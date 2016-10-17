@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getTitle().equals("DELETE"))
         {
-            StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+            StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
             for (int i=mylist.size()-1;i>=0;i--)
             {
                 if (adapter.chks[i] == true)
