@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }
         adapter = new MyStudentAdapter(MainActivity.this, mylist);
         lv.setAdapter(adapter);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
     }
 
     @Override
