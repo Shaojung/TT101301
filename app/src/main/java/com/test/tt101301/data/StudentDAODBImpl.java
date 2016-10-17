@@ -1,5 +1,6 @@
 package com.test.tt101301.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -20,13 +21,24 @@ public class StudentDAODBImpl implements StudentDAO {
     }
 
     @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        db.close();
+    }
+
+    @Override
     public List getList() {
+
         return null;
     }
 
     @Override
     public void add(Student s) {
-
+        ContentValues cv = new ContentValues();
+        cv.put("Name", s.Name);
+        cv.put("Tel", s.Tel);
+        cv.put("Addr", s.Addr);
+        db.insert("phonebook", null, cv);
     }
 
     @Override

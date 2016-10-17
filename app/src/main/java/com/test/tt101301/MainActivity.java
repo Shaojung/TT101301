@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.test.tt101301.data.Student;
+import com.test.tt101301.data.StudentDAO;
+import com.test.tt101301.data.StudentDAOFactory;
 import com.test.tt101301.data.StudentDAOFileImpl;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, "File");
         mylist = (ArrayList<Student>) impl.getList();
         String names[] = new String[mylist.size()];
         for (int i=0;i<mylist.size();i++)
