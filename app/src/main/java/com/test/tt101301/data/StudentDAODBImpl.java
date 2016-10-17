@@ -2,8 +2,10 @@ package com.test.tt101301.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,13 +13,17 @@ import java.util.List;
  */
 
 public class StudentDAODBImpl implements StudentDAO {
+    ArrayList<Student> mylist;
     Context context;
     SQLiteDatabase db;
+
     public StudentDAODBImpl(Context context)
     {
         this.context = context;
+        mylist = new ArrayList<>();
         MyDBHelper helper = new MyDBHelper(context);
         db = helper.getWritableDatabase();
+
     }
 
     @Override
@@ -28,8 +34,15 @@ public class StudentDAODBImpl implements StudentDAO {
 
     @Override
     public List getList() {
+        Cursor c = db.query("phonebook", new String[] {"_id", "Name", "Tel", "Addr"}, null, null, null, null, null);
+        c.moveToFirst();
+        do {
+            mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+        }while(c.moveToNext());
 
-        return null;
+
+
+        return mylist;
     }
 
     @Override

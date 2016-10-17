@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.test.tt101301.data.Student;
+import com.test.tt101301.data.StudentDAO;
+import com.test.tt101301.data.StudentDAOFactory;
 import com.test.tt101301.data.StudentDAOFileImpl;
 
 public class DetailActivity extends AppCompatActivity {
@@ -18,7 +20,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
         ID = getIntent().getIntExtra("ID", 0);
         s = impl.getItem(ID);
         Log.d("DATA", s.toString());
@@ -35,14 +37,14 @@ public class DetailActivity extends AppCompatActivity {
     public void clickUpdate(View v)
     {
         Student t = new Student(ID, ed1.getText().toString(), ed2.getText().toString(), ed3.getText().toString());
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
         impl.update(t);
         finish();
     }
     public void clickDelete(View v)
     {
         Student t = new Student(ID, ed1.getText().toString(), ed2.getText().toString(), ed3.getText().toString());
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
         impl.delete(t);
         finish();
     }

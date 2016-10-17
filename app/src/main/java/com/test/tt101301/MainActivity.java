@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     ArrayList<Student> mylist;
     MyStudentAdapter adapter;
+    final static String STORAGE_TYPE = "DB"; // File or DB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, "File");
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
         mylist = (ArrayList<Student>) impl.getList();
         String names[] = new String[mylist.size()];
         for (int i=0;i<mylist.size();i++)

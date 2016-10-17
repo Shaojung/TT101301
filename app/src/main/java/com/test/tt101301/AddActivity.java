@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.test.tt101301.data.Student;
+import com.test.tt101301.data.StudentDAO;
+import com.test.tt101301.data.StudentDAOFactory;
 import com.test.tt101301.data.StudentDAOFileImpl;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ public class AddActivity extends AppCompatActivity {
         EditText edTel = (EditText) findViewById(R.id.edTel);
         EditText edAddr = (EditText) findViewById(R.id.edAddr);
 
-        StudentDAOFileImpl impl = new StudentDAOFileImpl(this);
+        StudentDAO impl = StudentDAOFactory.createStudentDAO(this, MainActivity.STORAGE_TYPE);
         ArrayList<Student> mylist = (ArrayList<Student>) impl.getList();
         int MaxID = 0;
         for (Student s: mylist)
