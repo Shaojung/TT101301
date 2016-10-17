@@ -41,7 +41,6 @@ public class StudentDAODBImpl implements StudentDAO {
                 mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
             }while(c.moveToNext());
         }
-
         return mylist;
     }
 
@@ -52,11 +51,17 @@ public class StudentDAODBImpl implements StudentDAO {
         cv.put("Tel", s.Tel);
         cv.put("Addr", s.Addr);
         db.insert("phonebook", null, cv);
+
     }
 
     @Override
     public void update(Student s) {
-
+        ContentValues cv = new ContentValues();
+        cv.put("Name", s.Name);
+        cv.put("Tel", s.Tel);
+        cv.put("Addr", s.Addr);
+        final String strID = String.valueOf(s.ID);
+        db.update("phonebook", cv, "_id=?", new String[]{strID});
     }
 
     @Override
@@ -66,6 +71,12 @@ public class StudentDAODBImpl implements StudentDAO {
 
     @Override
     public Student getItem(int ID) {
+
+        Cursor c = db.query("phonebook", new String[] {"_id", "Name", "Tel", "Addr"}, "_id=?", new String[]{String.valueOf(ID)}, null, null, null);
+        if (c.moveToFirst())
+        {
+            return new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3));
+        }
         return null;
     }
 }
