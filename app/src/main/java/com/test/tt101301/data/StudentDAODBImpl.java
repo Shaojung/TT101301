@@ -35,12 +35,12 @@ public class StudentDAODBImpl implements StudentDAO {
     @Override
     public List getList() {
         Cursor c = db.query("phonebook", new String[] {"_id", "Name", "Tel", "Addr"}, null, null, null, null, null);
-        c.moveToFirst();
-        do {
-            mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
-        }while(c.moveToNext());
-
-
+        if (c.moveToFirst())
+        {
+            do {
+                mylist.add(new Student(c.getInt(0), c.getString(1), c.getString(2), c.getString(3)));
+            }while(c.moveToNext());
+        }
 
         return mylist;
     }
