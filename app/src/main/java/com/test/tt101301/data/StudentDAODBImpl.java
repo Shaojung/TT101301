@@ -66,7 +66,7 @@ public class StudentDAODBImpl implements StudentDAO {
 
     @Override
     public void delete(Student s) {
-
+        db.delete("phonebook", "_id=?", new String[] {String.valueOf(s.ID)});
     }
 
     @Override
