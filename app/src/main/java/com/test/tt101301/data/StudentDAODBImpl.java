@@ -1,6 +1,7 @@
 package com.test.tt101301.data;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
@@ -10,9 +11,12 @@ import java.util.List;
 
 public class StudentDAODBImpl implements StudentDAO {
     Context context;
+    SQLiteDatabase db;
     public StudentDAODBImpl(Context context)
     {
         this.context = context;
+        MyDBHelper helper = new MyDBHelper(context);
+        db = helper.getWritableDatabase();
     }
 
     @Override
